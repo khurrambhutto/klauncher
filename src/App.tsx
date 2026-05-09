@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 
@@ -9,6 +9,40 @@ type LauncherItem = {
   icon?: string | null;
   kind: "app" | "file" | "folder" | "text" | "clipboard" | "script";
 };
+
+function iconUrl(path: string | undefined | null): string | null {
+  if (!path) return null;
+  return `icon://localhost${path}`;
+}
+
+function iconFallback(title: string): string {
+  const trimmed = title.trim();
+  if (trimmed.length === 0) return "A";
+  const first = trimmed.codePointAt(0) ?? 65;
+  return String.fromCodePoint(first);
+}
+
+function AppIcon({ icon, title }: { icon?: string | null; title: string }) {
+  const [failed, setFailed] = useState(false);
+  const url = useRef<string | null>(null);
+
+  if (!url.current && icon) {
+    url.current = iconUrl(icon);
+  }
+
+  if (url.current && !failed) {
+    return (
+      <img
+        className="icon-img"
+        src={url.current}
+        alt=""
+        onError={() => setFailed(true)}
+      />
+    );
+  }
+
+  return <span className="icon-fallback">{iconFallback(title)}</span>;
+}
 
 function App() {
   const [query, setQuery] = useState("");
@@ -107,7 +141,7 @@ function App() {
               role="option"
               type="button"
             >
-              <span className="icon-box">{item.icon ? item.icon.slice(0, 2) : "A"}</span>
+              <AppIcon icon={item.icon} title={item.title} />
               <span className="result-copy">
                 <span className="result-title">{item.title}</span>
                 <span className="result-subtitle">{item.subtitle ?? item.id}</span>

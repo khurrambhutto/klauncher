@@ -1,5 +1,6 @@
 use crate::core::item::LauncherItem;
 use crate::error::AppResult;
+use crate::platform::linux::icon_resolver;
 use crate::providers::apps::AppProvider;
 
 #[tauri::command]
@@ -10,6 +11,11 @@ pub fn search_apps(query: String) -> Result<Vec<LauncherItem>, String> {
 #[tauri::command]
 pub fn launch_app(app_id: String) -> Result<(), String> {
     run_launch_app(&app_id).map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub fn resolve_icon(icon_value: String) -> Result<Option<String>, String> {
+    Ok(icon_resolver::resolve_icon(&icon_value))
 }
 
 fn run_search_apps(query: &str) -> AppResult<Vec<LauncherItem>> {
