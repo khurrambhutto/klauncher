@@ -1,21 +1,21 @@
 :root {
-  /* Dark floating theme - more transparent */
+  /* Light frosted glass theme - minimal transparency */
   --bg-backdrop: transparent;
-  --bg-card: rgba(20, 20, 24, 0.65);
-  --bg-elevated: rgba(30, 30, 36, 0.75);
-  --bg-hover: rgba(255, 255, 255, 0.08);
-  --bg-selected: rgba(99, 102, 241, 0.2);
-  
-  --text-primary: #f5f5f7;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  
-  --accent: #818cf8;
-  --accent-dim: rgba(99, 102, 241, 0.2);
-  
-  --border: rgba(255, 255, 255, 0.08);
-  --border-subtle: rgba(255, 255, 255, 0.04);
-  
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-elevated: rgba(250, 250, 252, 0.9);
+  --bg-hover: rgba(0, 0, 0, 0.04);
+  --bg-selected: rgba(59, 130, 246, 0.15);
+
+  --text-primary: #1a1a1f;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+
+  --accent: #3b82f6;
+  --accent-dim: rgba(59, 130, 246, 0.12);
+
+  --border: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.04);
+
   color: var(--text-primary);
   background: transparent;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
@@ -52,9 +52,9 @@ input {
 .launcher-shell {
   display: flex;
   min-height: 100vh;
-  padding: 3rem 1rem;
+  padding: 2rem;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   background: transparent;
   overflow: hidden;
 }
@@ -64,48 +64,45 @@ input {
 .preview-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 2.5rem;
+  border-radius: 16px;
+  width: 200px;
+  height: 200px;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    0 20px 40px -10px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(60px) saturate(200%);
-  -webkit-backdrop-filter: blur(60px) saturate(200%);
+  justify-content: center;
+  gap: 1rem;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.04),
+    0 16px 32px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .preview-box {
-  width: 100px;
-  height: 100px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0.05) 100%);
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 4px 20px rgba(99, 102, 241, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .preview-box .icon-img {
-  width: 60px;
-  height: 60px;
+  width: 72px;
+  height: 72px;
   border-radius: 14px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
   animation: icon-scale-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .preview-box .icon-fallback {
-  width: 60px;
-  height: 60px;
+  width: 72px;
+  height: 72px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,11 +113,21 @@ input {
 }
 
 .preview-placeholder {
-  width: 60px;
-  height: 60px;
+  width: 72px;
+  height: 72px;
   border-radius: 14px;
-  border: 2px dashed var(--border);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.preview-app-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @keyframes icon-scale-in {
@@ -134,53 +141,17 @@ input {
   }
 }
 
-/* ─── Search Section ─── */
+/* ─── Hidden Search Input ─── */
 
-.search-wrapper {
-  padding: 0.75rem 0;
-  width: 100%;
-}
-
-.search-input-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-icon {
+.hidden-search-input {
   position: absolute;
-  left: 1rem;
-  color: var(--text-muted);
+  opacity: 0;
   pointer-events: none;
-  z-index: 1;
-}
-
-.search-input {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  outline: none;
-  padding: 0.875rem 1rem 0.875rem 2.75rem;
-  background: rgba(0, 0, 0, 0.2);
-  color: var(--text-primary);
-  font-size: 0.9375rem;
-  font-weight: 450;
-  transition: all 0.2s ease;
-}
-
-.search-input:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.search-input:focus {
-  border-color: var(--accent);
-  background: rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 0 3px var(--accent-dim);
-}
-
-.search-input::placeholder {
-  color: var(--text-muted);
+  width: 0;
+  height: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 /* ─── Results Card ─── */
@@ -188,32 +159,38 @@ input {
 .results-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  margin-top: 0.75rem;
+  border-radius: 16px;
+  width: 500px;
+  margin-top: 0.5rem;
   overflow: hidden;
   box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    0 20px 40px -10px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(60px) saturate(200%);
-  -webkit-backdrop-filter: blur(60px) saturate(200%);
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.04),
+    0 16px 32px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .results-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.875rem 1rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--border-subtle);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .results-count {
   font-size: 0.6875rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.02em;
+}
+
+.query-text {
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .results-actions {
@@ -257,14 +234,14 @@ input {
 }
 
 .results-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 .results-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.25);
   border: 2px solid transparent;
   background-clip: padding-box;
 }
@@ -303,7 +280,7 @@ input {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.03);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -326,7 +303,7 @@ input {
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 6px;
 }
 
@@ -340,7 +317,7 @@ input {
 
 .result-title {
   font-size: 0.875rem;
-  font-weight: 590;
+  font-weight: 700;
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -348,8 +325,15 @@ input {
   letter-spacing: -0.01em;
 }
 
+.highlight-match {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+}
+
 .result-subtitle {
   font-size: 0.75rem;
+  font-weight: 600;
   color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -357,17 +341,7 @@ input {
   font-family: "SF Mono", Monaco, monospace;
 }
 
-.result-meta {
-  flex-shrink: 0;
-  padding: 0.25rem 0.5rem;
-  background: var(--accent-dim);
-  border-radius: 4px;
-  font-size: 0.625rem;
-  font-weight: 600;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
+
 
 /* ─── Empty State ─── */
 
@@ -390,20 +364,20 @@ input {
 
 .empty-state-text {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 /* ─── Error Banner ─── */
 
 .error-banner {
-  margin: 0.75rem;
-  padding: 0.75rem 1rem;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  margin: 0.75rem 0 0 0;
+  padding: 0.625rem 0.875rem;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
   border-radius: 10px;
-  color: #f87171;
+  color: #dc2626;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 700;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -412,8 +386,9 @@ input {
 /* ─── Launcher Layout ─── */
 
 .launcher-container {
-  width: min(480px, 100%);
+  width: min(400px, 100%);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0;
 }

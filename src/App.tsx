@@ -22,26 +22,41 @@ function iconFallback(title: string): string {
   return String.fromCodePoint(first);
 }
 
-// SVG Icons
-function SearchIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  );
+// Helper function to highlight matching characters
+function HighlightText({ text, query }: { text: string; query: string }) {
+  if (!query) return <>{text}</>;
+  
+  const normalizedText = text.toLowerCase();
+  const normalizedQuery = query.toLowerCase();
+  const chars = normalizedQuery.split('');
+  
+  const result: React.ReactNode[] = [];
+  let textIndex = 0;
+  let queryIndex = 0;
+  
+  while (textIndex < text.length) {
+    const currentChar = normalizedText[textIndex];
+    const queryChar = normalizedQuery[queryIndex];
+    
+    if (queryIndex < chars.length && currentChar === queryChar) {
+      // This character matches the query - underline it
+      result.push(
+        <span key={textIndex} className="highlight-match">
+          {text[textIndex]}
+        </span>
+      );
+      queryIndex++;
+    } else {
+      // Regular character
+      result.push(text[textIndex]);
+    }
+    textIndex++;
+  }
+  
+  return <>{result}</>;
 }
 
+// SVG Icons
 function SettingsIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -150,7 +165,7 @@ function App() {
   return (
     <main className="launcher-shell">
       <div className="launcher-container">
-        {/* Preview Card - Top Section */}
+        {/* Preview Card - Top Section with Icon and Name */}
         <div className="preview-card">
           <div className="preview-box">
             {selectedItem ? (
@@ -159,23 +174,14 @@ function App() {
               <div className="preview-placeholder" />
             )}
           </div>
-          
-          {/* Search inside preview card */}
-          <div className="search-wrapper">
-            <div className="search-input-container">
-              <SearchIcon className="search-icon" />
-              <input
-                autoFocus
-                className="search-input"
-                onChange={(event) => setQuery(event.currentTarget.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Search apps..."
-                spellCheck={false}
-                value={query}
-              />
-            </div>
-          </div>
-          
+          <span className="preview-app-name">
+            {selectedItem ? (
+              <HighlightText text={selectedItem.title} query={query} />
+            ) : (
+              "Select an app"
+            )}
+          </span>
+
           {error && (
             <div className="error-banner">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -188,13 +194,26 @@ function App() {
           )}
         </div>
 
+        {/* Hidden input for keyboard search */}
+        <input
+          autoFocus
+          className="hidden-search-input"
+          onChange={(event) => setQuery(event.currentTarget.value)}
+          onKeyDown={handleKeyDown}
+          placeholder=""
+          spellCheck={false}
+          value={query}
+        />
+
         {/* Results Card - Below with gap */}
         <div className="results-card">
-          {/* Results Header */}
+          {/* Results Header with Search Query */}
           <div className="results-header">
             <span className="results-count">
               {items.length} {items.length === 1 ? "Result" : "Results"}
-              {query && ` for "${query}"`}
+              {query && (
+                <span className="query-text"> "{query}"</span>
+              )}
             </span>
             <div className="results-actions">
               <button className="action-btn" title="Settings">
@@ -229,12 +248,11 @@ function App() {
                     <AppIcon icon={item.icon} title={item.title} />
                   </div>
                   <div className="result-content">
-                    <span className="result-title">{item.title}</span>
+                    <span className="result-title">
+                      <HighlightText text={item.title} query={query} />
+                    </span>
                     <span className="result-subtitle">{item.subtitle ?? item.id}</span>
                   </div>
-                  {index === selectedIndex && (
-                    <span className="result-meta">Enter to open</span>
-                  )}
                 </button>
               ))
             )}
