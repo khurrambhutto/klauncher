@@ -18,6 +18,11 @@ pub fn resolve_icon(icon_value: String) -> Result<Option<String>, String> {
     Ok(icon_resolver::resolve_icon(&icon_value))
 }
 
+#[tauri::command]
+pub fn hide_window(window: tauri::Window) -> Result<(), String> {
+    window.hide().map_err(|e| e.to_string())
+}
+
 fn run_search_apps(query: &str) -> AppResult<Vec<LauncherItem>> {
     AppProvider::load()?.search(query)
 }

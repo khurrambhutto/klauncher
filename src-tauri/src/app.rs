@@ -31,6 +31,7 @@ pub fn build() -> tauri::Builder<tauri::Wry> {
             commands::launcher::search_apps,
             commands::launcher::launch_app,
             commands::launcher::resolve_icon,
+            commands::launcher::hide_window,
         ])
 }
 
