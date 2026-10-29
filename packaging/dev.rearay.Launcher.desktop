@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Raycast Linux
+Comment=Search and open applications
+Exec=raycast-linux --show
+Icon=system-search
+Terminal=false
+StartupNotify=true
+Categories=Utility;
+Keywords=launcher;search;

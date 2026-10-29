@@ -1,0 +1,134 @@
+{
+  "created_at": "2026-10-29T09:47:30.311344+00:00",
+  "binary_sha256": "19090321b7b5c29b0bea958cc383fc8d2803c523acae9f9f2c23936ba3e1d8e2",
+  "source_sha256": {
+    "Cargo.toml": "b9f0b32aa3fb8f56423429f20bad6c378c320c81d417bb5bc7439156a0895cef",
+    "Cargo.lock": "fe8bd90ddd5611d885923437a995633faccbb732ae1214bbc23558b9b04ddc1b",
+    "src/catalog.rs": "08ab3bafaecb07766038b2326543fd49b90be7f033ab59f9b4b03141b4560525",
+    "src/input.rs": "15d528a7b5cf9d3f901db55b4c8d1138e8c301e4b489443939d2088d646e73d2",
+    "src/ipc.rs": "67064dbaf41d09f74db2feaef8d50e1c262f4ab6387c2828c5cef737d2aedbc1",
+    "src/main.rs": "e614813dc3cc713b688a5f19bf5d3fae1cbe3ea1346b0ad67f42c6cd0f1e1b47"
+  },
+  "session_type": "wayland",
+  "desktop": "ubuntu:GNOME",
+  "backend_requested": "x11",
+  "checks": [
+    {
+      "name": "native backend and window",
+      "passed": true,
+      "status": {
+        "pid": 248002,
+        "backend": "X11",
+        "visible": true,
+        "active": true,
+        "input_focused": true,
+        "query": "",
+        "applications": 54,
+        "matches": 54,
+        "selected": "nm-connection-editor.desktop",
+        "launching": false,
+        "launch_error": null,
+        "render_count": 2
+      }
+    },
+    {
+      "name": "desktop discovery and NoDisplay handling",
+      "passed": true
+    },
+    {
+      "name": "targeted X11 key events type, navigate, select-all, delete and hide",
+      "passed": true
+    },
+    {
+      "name": "AT-SPI search role",
+      "passed": true,
+      "role": "entry",
+      "interfaces": [
+        "Accessible",
+        "Component"
+      ]
+    },
+    {
+      "name": "result row fills available window width",
+      "passed": true,
+      "width": 702
+    },
+    {
+      "name": "Unicode query filters real results and renders accessible result",
+      "passed": true,
+      "status": {
+        "pid": 248002,
+        "backend": "X11",
+        "visible": true,
+        "active": true,
+        "input_focused": true,
+        "query": "Café 文書",
+        "applications": 54,
+        "matches": 1,
+        "selected": "launcher-unicode.desktop",
+        "launching": false,
+        "launch_error": null,
+        "render_count": 24
+      }
+    },
+    {
+      "name": "empty search state",
+      "passed": true
+    },
+    {
+      "name": "hide and reopen preserve the process",
+      "passed": true,
+      "status": {
+        "pid": 248002,
+        "backend": "X11",
+        "visible": true,
+        "active": true,
+        "input_focused": true,
+        "query": "no application should match this qxz982",
+        "applications": 54,
+        "matches": 0,
+        "selected": null,
+        "launching": false,
+        "launch_error": null,
+        "render_count": 27
+      }
+    },
+    {
+      "name": "launch error stays visible and clears busy state",
+      "passed": true,
+      "status": {
+        "pid": 248002,
+        "backend": "X11",
+        "visible": true,
+        "active": true,
+        "input_focused": true,
+        "query": "Launcher Failure",
+        "applications": 54,
+        "matches": 1,
+        "selected": "launcher-failure.desktop",
+        "launching": false,
+        "launch_error": "gio: Unable to launch application ‘/tmp/rea-launcher-8_zuj03o/data/applications/launcher-failure.desktop’: Failed to change to directory “/nonexistent/rea-launcher-proof” (No such file or directory)",
+        "render_count": 30
+      }
+    },
+    {
+      "name": "AT-SPI result action launches desktop Exec with field code and quoted path",
+      "passed": true
+    },
+    {
+      "name": "targeted X11 Enter opens the selected application",
+      "passed": true
+    },
+    {
+      "name": "explicit shutdown",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "CLI query updates and AT-SPI result clicking do not prove physical keyboard input, IME composition, or Orca narration.",
+    "X11 in this session means XWayland, not a separate native Xorg session.",
+    "Reopen focus remains subject to compositor activation policy.",
+    "The pinned AccessKit Unix adapter exposes no AT-SPI EditableText interface for the search field."
+  ],
+  "passed": true
+}
